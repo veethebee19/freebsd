@@ -114,7 +114,9 @@ static __inline __uintmax_t ummin(__uintmax_t a, __uintmax_t b)
 static __inline off_t omax(off_t a, off_t b) { return (a > b ? a : b); }
 static __inline off_t omin(off_t a, off_t b) { return (a < b ? a : b); }
 
+#ifndef UT_FRIENDLY
 static __inline int abs(int a) { return (a < 0 ? -a : a); }
+#endif
 static __inline long labs(long a) { return (a < 0 ? -a : a); }
 static __inline quad_t qabs(quad_t a) { return (a < 0 ? -a : a); }
 
@@ -166,9 +168,13 @@ void	 qsort(void *base, size_t nmemb, size_t size,
 	    int (*compar)(const void *, const void *));
 void	 qsort_r(void *base, size_t nmemb, size_t size, void *thunk,
 	    int (*compar)(void *, const void *, const void *));
+#ifndef UT_FRIENDLY
 u_long	 random(void);
+#endif
 int	 scanc(u_int, const u_char *, const u_char *, int);
+#ifndef UT_FRIENDLY
 void	 srandom(u_long);
+#endif
 int	 strcasecmp(const char *, const char *);
 char	*strcat(char * __restrict, const char * __restrict);
 char	*strchr(const char *, int);

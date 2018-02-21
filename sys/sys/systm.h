@@ -190,8 +190,10 @@ struct _jmp_buf;
 struct trapframe;
 struct eventtimer;
 
+#if !(defined(_KERNEL) && defined(UT_FRIENDLY))
 int	setjmp(struct _jmp_buf *) __returns_twice;
 void	longjmp(struct _jmp_buf *, int) __dead2;
+#endif
 int	dumpstatus(vm_offset_t addr, off_t count);
 int	nullop(void);
 int	eopnotsupp(void);
@@ -226,18 +228,24 @@ extern early_putc_t *early_putc;
 #endif
 int	kvprintf(char const *, void (*)(int, void*), void *, int,
 	    __va_list) __printflike(1, 0);
+#ifndef UT_FRIENDLY
 void	log(int, const char *, ...) __printflike(2, 3);
+#endif
 void	log_console(struct uio *);
 void	vlog(int, const char *, __va_list) __printflike(2, 0);
+#ifndef UT_FRIENDLY
 int	asprintf(char **ret, struct malloc_type *mtp, const char *format, 
 	    ...) __printflike(3, 4);
+#endif
 int	printf(const char *, ...) __printflike(1, 2);
 int	snprintf(char *, size_t, const char *, ...) __printflike(3, 4);
 int	sprintf(char *buf, const char *, ...) __printflike(2, 3);
 int	uprintf(const char *, ...) __printflike(1, 2);
 int	vprintf(const char *, __va_list) __printflike(1, 0);
+#ifndef UT_FRIENDLY
 int	vasprintf(char **ret, struct malloc_type *mtp, const char *format,
 	    __va_list ap) __printflike(3, 0);
+#endif
 int	vsnprintf(char *, size_t, const char *, __va_list) __printflike(3, 0);
 int	vsnrprintf(char *, size_t, int, const char *, __va_list) __printflike(4, 0);
 int	vsprintf(char *buf, const char *, __va_list) __printflike(2, 0);
@@ -358,7 +366,7 @@ struct timeval;
 void	adjust_timeout_calltodo(struct timeval *time_change);
 #endif /* APM_FIXUP_CALLTODO */
 
-#include <sys/libkern.h>
+// #include <sys/libkern.h>
 
 /* Initialize the world */
 void	consinit(void);
