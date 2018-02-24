@@ -37,7 +37,7 @@
 
 #include <sys/cdefs.h>
 #include <sys/types.h>
-#ifdef _KERNEL
+#if defined(_KERNEL) || defined(_KERNEL_UT)
 #include <sys/systm.h>
 #endif
 
@@ -114,7 +114,7 @@ static __inline __uintmax_t ummin(__uintmax_t a, __uintmax_t b)
 static __inline off_t omax(off_t a, off_t b) { return (a > b ? a : b); }
 static __inline off_t omin(off_t a, off_t b) { return (a < b ? a : b); }
 
-#ifndef UT_FRIENDLY
+#ifndef _KERNEL_UT
 static __inline int abs(int a) { return (a < 0 ? -a : a); }
 #endif
 static __inline long labs(long a) { return (a < 0 ? -a : a); }
@@ -168,11 +168,11 @@ void	 qsort(void *base, size_t nmemb, size_t size,
 	    int (*compar)(const void *, const void *));
 void	 qsort_r(void *base, size_t nmemb, size_t size, void *thunk,
 	    int (*compar)(void *, const void *, const void *));
-#ifndef UT_FRIENDLY
+#ifndef _KERNEL_UT
 u_long	 random(void);
 #endif
 int	 scanc(u_int, const u_char *, const u_char *, int);
-#ifndef UT_FRIENDLY
+#ifndef _KERNEL_UT
 void	 srandom(u_long);
 #endif
 int	 strcasecmp(const char *, const char *);
@@ -181,9 +181,13 @@ char	*strchr(const char *, int);
 int	 strcmp(const char *, const char *);
 char	*strcpy(char * __restrict, const char * __restrict);
 size_t	 strcspn(const char * __restrict, const char * __restrict) __pure;
+#if defined(_KERNEL) || defined(_KERNEL_UT_MALLOC)
 char	*strdup(const char *__restrict, struct malloc_type *);
+#endif
 char	*strncat(char *, const char *, size_t);
+#if defined(_KERNEL) || defined(_KERNEL_UT_MALLOC)
 char	*strndup(const char *__restrict, size_t, struct malloc_type *);
+#endif
 size_t	 strlcat(char *, const char *, size_t);
 size_t	 strlcpy(char *, const char *, size_t);
 size_t	 strlen(const char *);

@@ -288,7 +288,7 @@ tvtosbt(struct timeval _tv)
 }
 #endif /* __BSD_VISIBLE */
 
-#ifdef _KERNEL
+#if defined(_KERNEL) || defined(_KERNEL_UT)
 
 /* Operations on timespecs */
 #define	timespecclear(tvp)	((tvp)->tv_sec = (tvp)->tv_nsec = 0)
@@ -409,7 +409,7 @@ struct clockinfo {
 #define	CPUCLOCK_WHICH_TID	1
 #endif
 
-#ifdef _KERNEL
+#if defined(_KERNEL) || defined(_KERNEL_UT)
 
 /*
  * Kernel to clock driver interface.

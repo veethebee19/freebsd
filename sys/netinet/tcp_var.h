@@ -43,7 +43,7 @@
 #include <sys/mbuf.h>
 #endif
 
-#if defined(_KERNEL) || defined(_WANT_TCPCB)
+#if defined(_KERNEL) || defined(_WANT_TCPCB) || defined(_KERNEL_UT)
 /* TCP segment queue entry */
 struct tseg_qent {
 	LIST_ENTRY(tseg_qent) tqe_q;
@@ -588,7 +588,7 @@ struct	tcpstat {
 
 #define	tcps_rcvmemdrop	tcps_rcvreassfull	/* compat */
 
-#ifdef _KERNEL
+#if defined(_KERNEL) || defined(_KERNEL_UT)
 #define	TI_UNLOCKED	1
 #define	TI_RLOCKED	2
 #include <sys/counter.h>
@@ -692,7 +692,7 @@ void	tcp_inptoxtp(const struct inpcb *, struct xtcpcb *);
 #define	TCPCTL_DROP		15	/* drop tcp connection */
 #define	TCPCTL_STATES		16	/* connection counts by TCP state */
 
-#ifdef _KERNEL
+#if defined(_KERNEL) || defined(_KERNEL_UT)
 #ifdef SYSCTL_DECL
 SYSCTL_DECL(_net_inet_tcp);
 SYSCTL_DECL(_net_inet_tcp_sack);

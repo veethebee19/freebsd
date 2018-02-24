@@ -64,7 +64,7 @@
  * pointer to storage for virtualized global variables.  Expose to userspace
  * as required for libkvm.
  */
-#if defined(_KERNEL) || defined(_WANT_VNET)
+#if defined(_KERNEL) || defined(_WANT_VNET) || defined(_KERNEL_UT)
 #include <sys/queue.h>
 
 struct vnet {
@@ -86,7 +86,7 @@ struct vnet {
 #define	VNET_SYMPREFIX		"vnet_entry_"
 #endif
 
-#ifdef _KERNEL
+#if defined(_KERNEL) || defined(_KERNEL_UT)
 
 #define	VNET_PCPUSTAT_DECLARE(type, name)	\
     VNET_DECLARE(counter_u64_t, name[sizeof(type) / sizeof(uint64_t)])

@@ -68,7 +68,7 @@ typedef uint16_t	*acl_flagset_t;
  */
 #define	ACL_MAX_ENTRIES				254
 
-#if defined(_KERNEL) || defined(_ACL_PRIVATE)
+#if defined(_KERNEL) || defined(_ACL_PRIVATE) || defined(_KERNEL_UT)
 
 #define	POSIX1E_ACL_ACCESS_EXTATTR_NAMESPACE	EXTATTR_NAMESPACE_SYSTEM
 #define	POSIX1E_ACL_ACCESS_EXTATTR_NAME		"posix1e.acl_access"

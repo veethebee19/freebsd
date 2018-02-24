@@ -132,7 +132,7 @@ struct malloc_type_header {
 	char				mth_name[MALLOC_MAX_NAME];
 };
 
-#ifdef _KERNEL
+#if defined(_KERNEL) || defined(_KERNEL_UT)
 #define	MALLOC_DEFINE(type, shortdesc, longdesc)			\
 	struct malloc_type type[1] = {					\
 		{ NULL, M_MAGIC, shortdesc, NULL }			\
@@ -172,25 +172,33 @@ void	*contigmalloc_domain(unsigned long size, struct malloc_type *type,
 	    int domain, int flags, vm_paddr_t low, vm_paddr_t high,
 	    unsigned long alignment, vm_paddr_t boundary)
 	    __malloc_like __result_use_check __alloc_size(1) __alloc_align(6);
+#if defined(_KERNEL) || defined(_KERNEL_UT_MALLOC)
 void	free(void *addr, struct malloc_type *type);
+#endif
 void	free_domain(void *addr, struct malloc_type *type);
+#if defined(_KERNEL) || defined(_KERNEL_UT_MALLOC)
 void	*malloc(size_t size, struct malloc_type *type, int flags) __malloc_like
 	    __result_use_check __alloc_size(1);
+#endif
 void	*malloc_domain(size_t size, struct malloc_type *type, int domain,
 	    int flags) __malloc_like __result_use_check __alloc_size(1);
+#if defined(_KERNEL) || defined(_KERNEL_UT_MALLOC)
 void	*mallocarray(size_t nmemb, size_t size, struct malloc_type *type,
 	    int flags) __malloc_like __result_use_check
 	    __alloc_size2(1, 2);
+#endif
 void	malloc_init(void *);
 int	malloc_last_fail(void);
 void	malloc_type_allocated(struct malloc_type *type, unsigned long size);
 void	malloc_type_freed(struct malloc_type *type, unsigned long size);
 void	malloc_type_list(malloc_type_list_func_t *, void *);
 void	malloc_uninit(void *);
+#if defined(_KERNEL) || defined(_KERNEL_UT_MALLOC)
 void	*realloc(void *addr, size_t size, struct malloc_type *type, int flags)
 	    __result_use_check __alloc_size(2);
 void	*reallocf(void *addr, size_t size, struct malloc_type *type, int flags)
 	    __result_use_check __alloc_size(2);
+#endif
 
 struct malloc_type *malloc_desc2type(const char *desc);
 

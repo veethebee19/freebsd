@@ -60,7 +60,7 @@ enum uio_seg {
 };
 #endif
 
-#ifdef _KERNEL
+#if defined(_KERNEL) || defined(_KERNEL_UT)
 
 struct uio {
 	struct	iovec *uio_iov;		/* scatter/gather list */

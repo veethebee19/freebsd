@@ -117,7 +117,7 @@ struct lock_class {
 #define	LA_RECURSED	0x00000008	/* Lock is recursed. */
 #define	LA_NOTRECURSED	0x00000010	/* Lock is not recursed. */
 
-#ifdef _KERNEL
+#if defined(_KERNEL) || defined(_KERNEL_UT)
 /*
  * If any of WITNESS, INVARIANTS, or KTR_LOCK KTR tracing has been enabled,
  * then turn on LOCK_DEBUG.  When this option is on, extra debugging

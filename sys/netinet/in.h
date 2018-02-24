@@ -640,7 +640,7 @@ int	getsourcefilter(int, uint32_t, struct sockaddr *, socklen_t,
 
 #endif /* __BSD_VISIBLE */
 
-#ifdef _KERNEL
+#if defined(_KERNEL) || defined(_KERNEL_UT)
 
 struct ifnet; struct mbuf;	/* forward declarations for Standard C */
 struct in_ifaddr;

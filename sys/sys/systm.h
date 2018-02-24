@@ -190,7 +190,7 @@ struct _jmp_buf;
 struct trapframe;
 struct eventtimer;
 
-#if !(defined(_KERNEL) && defined(UT_FRIENDLY))
+#if !defined(_KERNEL_UT)
 int	setjmp(struct _jmp_buf *) __returns_twice;
 void	longjmp(struct _jmp_buf *, int) __dead2;
 #endif
@@ -228,12 +228,12 @@ extern early_putc_t *early_putc;
 #endif
 int	kvprintf(char const *, void (*)(int, void*), void *, int,
 	    __va_list) __printflike(1, 0);
-#ifndef UT_FRIENDLY
+#ifndef _KERNEL_UT
 void	log(int, const char *, ...) __printflike(2, 3);
 #endif
 void	log_console(struct uio *);
 void	vlog(int, const char *, __va_list) __printflike(2, 0);
-#ifndef UT_FRIENDLY
+#ifndef _KERNEL_UT
 int	asprintf(char **ret, struct malloc_type *mtp, const char *format, 
 	    ...) __printflike(3, 4);
 #endif
@@ -242,7 +242,7 @@ int	snprintf(char *, size_t, const char *, ...) __printflike(3, 4);
 int	sprintf(char *buf, const char *, ...) __printflike(2, 3);
 int	uprintf(const char *, ...) __printflike(1, 2);
 int	vprintf(const char *, __va_list) __printflike(1, 0);
-#ifndef UT_FRIENDLY
+#ifndef _KERNEL_UT
 int	vasprintf(char **ret, struct malloc_type *mtp, const char *format,
 	    __va_list ap) __printflike(3, 0);
 #endif
@@ -268,12 +268,14 @@ void	hexdump(const void *ptr, int length, const char *hdr, int flags);
 #define ovbcopy(f, t, l) bcopy((f), (t), (l))
 void	bcopy(const void * _Nonnull from, void * _Nonnull to, size_t len);
 void	bzero(void * _Nonnull buf, size_t len);
+#ifndef _KERNEL_UT
 #define bzero(buf, len) ({				\
 	if (__builtin_constant_p(len) && (len) <= 64)	\
 		__builtin_memset((buf), 0, (len));	\
 	else						\
 		bzero((buf), (len));			\
 })
+#endif
 void	explicit_bzero(void * _Nonnull, size_t);
 
 void	*memcpy(void * _Nonnull to, const void * _Nonnull from, size_t len);
@@ -366,7 +368,9 @@ struct timeval;
 void	adjust_timeout_calltodo(struct timeval *time_change);
 #endif /* APM_FIXUP_CALLTODO */
 
-// #include <sys/libkern.h>
+#if defined(_KERNEL) || defined(_KERNEL_UT_SYSTM_LIBKERN)
+#include <sys/libkern.h>
+#endif
 
 /* Initialize the world */
 void	consinit(void);
@@ -417,8 +421,10 @@ int	msleep_spin_sbt(void * _Nonnull chan, struct mtx *mtx,
 	    0, C_HARDCLOCK)
 int	pause_sbt(const char *wmesg, sbintime_t sbt, sbintime_t pr,
 	    int flags);
+#if defined(_KERNEL) || defined(_KERNEL_UT_PAUSE)
 #define	pause(wmesg, timo)						\
 	pause_sbt((wmesg), tick_sbt * (timo), 0, C_HARDCLOCK)
+#endif
 #define	pause_sig(wmesg, timo)						\
 	pause_sbt((wmesg), tick_sbt * (timo), 0, C_HARDCLOCK | C_CATCH)
 #define	tsleep(chan, pri, wmesg, timo)					\

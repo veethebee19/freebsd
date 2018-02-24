@@ -130,7 +130,7 @@ struct	ipstat {
 	uint64_t ips_badaddr;		/* invalid address on header */
 };
 
-#ifdef _KERNEL
+#if defined(_KERNEL) || defined(_KERNEL_UT)
 
 #include <sys/counter.h>
 #include <net/vnet.h>

@@ -38,7 +38,7 @@
 
 /* XXX: These includes suck. Sorry! */
 #include <sys/queue.h>
-#ifdef _KERNEL
+#if defined(_KERNEL) || defined(_KERNEL_UT)
 #include <sys/systm.h>
 #include <vm/uma.h>
 #ifdef WITNESS
@@ -46,7 +46,7 @@
 #endif
 #endif
 
-#ifdef _KERNEL
+#if defined(_KERNEL) || defined(_KERNEL_UT)
 #include <sys/sdt.h>
 
 #define	MBUF_PROBE1(probe, arg0)					\
@@ -99,7 +99,7 @@ struct mbuf;
 #define	MHLEN		((int)(MSIZE - MPKTHSIZE))
 #define	MINCLSIZE	(MHLEN + 1)
 
-#ifdef _KERNEL
+#if defined(_KERNEL) || defined(_KERNEL_UT)
 /*-
  * Macro for type conversion: convert mbuf pointer to data pointer of correct
  * type:
@@ -583,7 +583,7 @@ struct mbuf {
 #define	MBUF_TAG_MEM_NAME	"mbuf_tag"
 #define	MBUF_EXTREFCNT_MEM_NAME	"mbuf_ext_refcnt"
 
-#ifdef _KERNEL
+#if defined(_KERNEL) || defined(_KERNEL_UT)
 
 #ifdef WITNESS
 #define	MBUF_CHECKSLEEP(how) do {					\
@@ -760,6 +760,7 @@ m_init(struct mbuf *m, int how, short type, int flags)
 	return (error);
 }
 
+#ifndef __cplusplus
 static __inline struct mbuf *
 m_get(int how, short type)
 {
@@ -838,6 +839,7 @@ m_cljset(struct mbuf *m, void *cl, int type)
 	m->m_flags |= M_EXT;
 	MBUF_PROBE3(m__cljset, m, cl, type);
 }
+#endif
 
 static __inline void
 m_chtype(struct mbuf *m, short new_type)

@@ -129,7 +129,7 @@ struct ctlname {
  */
 #define	CTL_AUTO_START	0x100
 
-#ifdef _KERNEL
+#if defined(_KERNEL) || defined(_KERNEL_UT)
 #include <sys/linker_set.h>
 
 #ifdef KLD_MODULE
@@ -978,7 +978,7 @@ TAILQ_HEAD(sysctl_ctx_list, sysctl_ctx_entry);
 
 #define	CTL_P1003_1B_MAXID		26
 
-#ifdef _KERNEL
+#if defined(_KERNEL) || defined(_KERNEL_UT)
 
 /*
  * Declare some common oids.

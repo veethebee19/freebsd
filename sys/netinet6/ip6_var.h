@@ -255,7 +255,7 @@ struct	ip6stat {
 	uint64_t ip6s_sources_rule[IP6S_RULESMAX];
 };
 
-#ifdef _KERNEL
+#if defined(_KERNEL) || defined(_KERNEL_UT)
 #include <sys/counter.h>
 
 VNET_PCPUSTAT_DECLARE(struct ip6stat, ip6stat);
@@ -266,7 +266,7 @@ VNET_PCPUSTAT_DECLARE(struct ip6stat, ip6stat);
 #define	IP6STAT_DEC(name)	IP6STAT_SUB(name, 1)
 #endif
 
-#ifdef _KERNEL
+#if defined(_KERNEL) || defined(_KERNEL_UT)
 /* flags passed to ip6_output as last parameter */
 #define	IPV6_UNSPECSRC		0x01	/* allow :: as the source address */
 #define	IPV6_FORWARDING		0x02	/* most of IPv6 header exists */

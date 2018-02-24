@@ -35,7 +35,7 @@
 #ifndef _NETINET6_SCOPE6_VAR_H_
 #define _NETINET6_SCOPE6_VAR_H_
 
-#ifdef _KERNEL
+#if defined(_KERNEL) || defined(_KERNEL_UT)
 #include <net/vnet.h>
 
 #define	IPV6_ADDR_SCOPES_COUNT	16

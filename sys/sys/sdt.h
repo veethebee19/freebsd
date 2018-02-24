@@ -33,7 +33,7 @@
 #ifndef _SYS_SDT_H
 #define	_SYS_SDT_H
 
-#ifndef _KERNEL
+#if !defined(_KERNEL) && !defined(_KERNEL_UT)
 
 #define	_DTRACE_VERSION	1
 

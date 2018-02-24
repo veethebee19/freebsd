@@ -103,7 +103,7 @@ struct in6_addr {
 };
 
 #define s6_addr   __u6_addr.__u6_addr8
-#ifdef _KERNEL	/* XXX nonstandard */
+#if defined(_KERNEL) || defined(_KERNEL_UT)
 #define s6_addr8  __u6_addr.__u6_addr8
 #define s6_addr16 __u6_addr.__u6_addr16
 #define s6_addr32 __u6_addr.__u6_addr32
@@ -273,7 +273,7 @@ extern const struct in6_addr in6addr_linklocal_allv2routers;
  * KAME Scope Values
  */
 
-#ifdef _KERNEL	/* XXX nonstandard */
+#if defined(_KERNEL) || defined(_KERNEL_UT)	/* XXX nonstandard */
 #define IPV6_ADDR_SCOPE_NODELOCAL	0x01
 #define IPV6_ADDR_SCOPE_INTFACELOCAL	0x01
 #define IPV6_ADDR_SCOPE_LINKLOCAL	0x02
@@ -303,7 +303,7 @@ extern const struct in6_addr in6addr_linklocal_allv2routers;
  */
 #define IN6_IS_ADDR_MULTICAST(a)	((a)->s6_addr[0] == 0xff)
 
-#ifdef _KERNEL	/* XXX nonstandard */
+#if defined(_KERNEL) || defined(_KERNEL_UT)	/* XXX nonstandard */
 #define IPV6_ADDR_MC_SCOPE(a)		((a)->s6_addr[1] & 0x0f)
 #else
 #define __IPV6_ADDR_MC_SCOPE(a)		((a)->s6_addr[1] & 0x0f)
@@ -312,7 +312,7 @@ extern const struct in6_addr in6addr_linklocal_allv2routers;
 /*
  * Multicast Scope
  */
-#ifdef _KERNEL	/* refers nonstandard items */
+#if defined(_KERNEL) || defined(_KERNEL_UT)	/* refers nonstandard items */
 #define IN6_IS_ADDR_MC_NODELOCAL(a)	\
 	(IN6_IS_ADDR_MULTICAST(a) &&	\
 	 (IPV6_ADDR_MC_SCOPE(a) == IPV6_ADDR_SCOPE_NODELOCAL))
@@ -349,7 +349,7 @@ extern const struct in6_addr in6addr_linklocal_allv2routers;
 	 (__IPV6_ADDR_MC_SCOPE(a) == __IPV6_ADDR_SCOPE_GLOBAL))
 #endif
 
-#ifdef _KERNEL	/* nonstandard */
+#if defined(_KERNEL) || defined(_KERNEL_UT)	/* nonstandard */
 /*
  * KAME Scope
  */
@@ -660,7 +660,7 @@ struct ip6_mtuinfo {
 #define	M_RTALERT_MLD		M_PROTO8
 #define	M_FRAGMENTED		M_PROTO9	/* contained fragment header */
 
-#ifdef _KERNEL
+#if defined(_KERNEL) || defined(_KERNEL_UT)
 struct cmsghdr;
 struct ip6_hdr;
 

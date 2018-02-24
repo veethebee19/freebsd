@@ -116,7 +116,7 @@
 #define SPECNAMELEN	63		/* max length of devicename */
 
 /* More types and definitions used throughout the kernel. */
-#ifdef _KERNEL
+#if defined(_KERNEL) || defined(_KERNEL_UT)
 #include <sys/cdefs.h>
 #include <sys/errno.h>
 #ifndef LOCORE
