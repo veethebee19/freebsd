@@ -544,6 +544,8 @@ tcp_lro_rx_ipv6(struct lro_ctrl *lc, struct mbuf *m, struct ip6_hdr *ip6,
 {
 
 	/* XXX-BZ we should check the flow-label. */
+	if ((ip6->ip6_vfc & IPV6_VERSION_MASK) != IPV6_VERSION)
+		return (TCP_LRO_NOT_SUPPORTED);
 
 	/* XXX-BZ We do not yet support ext. hdrs. */
 	if (ip6->ip6_nxt != IPPROTO_TCP)
@@ -563,6 +565,9 @@ tcp_lro_rx_ipv4(struct lro_ctrl *lc, struct mbuf *m, struct ip *ip4,
 {
 	int csum_flags;
 	uint16_t csum;
+
+	if (ip4->ip_v != IPVERSION)
+		return (TCP_LRO_NOT_SUPPORTED);
 
 	if (ip4->ip_p != IPPROTO_TCP)
 		return (TCP_LRO_NOT_SUPPORTED);
