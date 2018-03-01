@@ -69,6 +69,7 @@ struct lro_entry {
 	uint32_t		tsecr;
 	uint16_t		window;
 	uint16_t		timestamp;	/* flag, not a TCP hdr field. */
+	uint16_t		vlan_tag;	/* EVL_VLID_MASK for no vlan */
 	struct timeval		mtime;
 };
 LIST_HEAD(lro_head, lro_entry);

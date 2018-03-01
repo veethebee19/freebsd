@@ -618,9 +618,14 @@ tcp_lro_rx2(struct lro_ctrl *lc, struct mbuf *m, uint32_t csum, int use_hash)
 	uint32_t *ts_ptr;
 	tcp_seq seq;
 	int error, ip_len, l;
-	uint16_t eh_type, tcp_data_len;
+	uint16_t eh_type, tcp_data_len, vlan_tag;
 	struct lro_head *bucket;
 	int force_flush = 0;
+
+	if (m->m_flags & M_VLANTAG)
+		vlan_tag = m->m_pkthdr.ether_vtag;
+	else
+		vlan_tag = EVL_VLID_MASK;
 
 	/* We expect a contiguous header [eh, ip, tcp]. */
 
@@ -761,6 +766,8 @@ tcp_lro_rx2(struct lro_ctrl *lc, struct mbuf *m, uint32_t csum, int use_hash)
 	/* Try to find a matching previous segment. */
 	LIST_FOREACH(le, bucket, hash_next) {
 		if (le->eh_type != eh_type)
+			continue;
+		if (le->vlan_tag != vlan_tag)
 			continue;
 		if (le->source_port != th->th_sport ||
 		    le->dest_port != th->th_dport)
@@ -916,6 +923,7 @@ tcp_lro_rx2(struct lro_ctrl *lc, struct mbuf *m, uint32_t csum, int use_hash)
 		break;
 #endif
 	}
+	le->vlan_tag = vlan_tag;
 	le->source_port = th->th_sport;
 	le->dest_port = th->th_dport;
 
