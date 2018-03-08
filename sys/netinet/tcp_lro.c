@@ -691,8 +691,8 @@ tcp_lro_rx2(struct lro_ctrl *lc, struct mbuf *m, uint32_t csum, int use_hash)
 	/*
 	 * Check TCP header constraints.
 	 */
-	/* Ensure no bits set besides ACK or PSH. */
-	if ((th->th_flags & ~(TH_ACK | TH_PUSH)) != 0) {
+	/* Ensure that ACK is set and no other flags are set other than PUSH. */
+	if ((th->th_flags & ~TH_PUSH) != TH_ACK) {
 		if (th->th_flags & TH_SYN)
 			return (TCP_LRO_CANNOT);
 		/*
