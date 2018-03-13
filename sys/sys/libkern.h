@@ -41,9 +41,15 @@
 #include <sys/systm.h>
 #endif
 
+#ifdef _KERNEL
 #ifndef	LIBKERN_INLINE
 #define	LIBKERN_INLINE  static __inline
 #define	LIBKERN_BODY
+#endif
+#elif defined(_KERNEL_UT)
+#ifndef LIBKERN_INLINE
+#define LIBKERN_INLINE
+#endif
 #endif
 
 /* BCD conversions. */
