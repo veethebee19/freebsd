@@ -46,7 +46,7 @@
 
 #define	BITSET_DEFINE(t, _s)						\
 struct t {								\
-        long    __bits[__bitset_words((_s))];				\
+        u_long    __bits[__bitset_words((_s))];				\
 }
 
 /*

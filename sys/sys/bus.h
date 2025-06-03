@@ -135,7 +135,7 @@ struct devreq {
 /* Flags for DEV_DELETE. */
 #define	DEVF_FORCE_DELETE	0x0000001
 
-#ifdef _KERNEL
+#if defined(_KERNEL) || defined(_KERNEL_UT)
 
 #include <sys/eventhandler.h>
 #include <sys/kobj.h>
@@ -724,8 +724,8 @@ void	bus_set_pass(int pass);
 /*
  * Some common device interfaces.
  */
-#include "device_if.h"
-#include "bus_if.h"
+//#include "device_if.h"
+//#include "bus_if.h"
 
 struct	module;
 
