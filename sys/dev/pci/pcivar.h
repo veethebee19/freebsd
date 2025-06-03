@@ -270,7 +270,7 @@ struct pci_devinfo {
 #endif
 
 #ifdef _SYS_BUS_H_
-
+/*
 #include "pci_if.h"
 
 enum pci_device_ivars {
@@ -299,7 +299,7 @@ enum pci_device_ivars {
 
 /*
  * Simplified accessors for pci devices
- */
+ 
 #define	PCI_ACCESSOR(var, ivar, type)					\
 	__BUS_ACCESSOR(pci, var, PCI, ivar, type)
 
@@ -329,7 +329,7 @@ PCI_ACCESSOR(lattimer,		LATTIMER,	uint8_t)
 
 /*
  * Operations on configuration space.
- */
+ 
 static __inline uint32_t
 pci_read_config(device_t dev, int reg, int width)
 {
@@ -341,12 +341,12 @@ pci_write_config(device_t dev, int reg, uint32_t val, int width)
 {
     PCI_WRITE_CONFIG(device_get_parent(dev), dev, reg, val, width);
 }
+*/
 
 /*
  * Ivars for pci bridges.
- */
 
-/*typedef enum pci_device_ivars pcib_device_ivars;*/
+/*typedef enum pci_device_ivars pcib_device_ivars;
 enum pcib_device_ivars {
 	PCIB_IVAR_DOMAIN,
 	PCIB_IVAR_BUS
@@ -364,7 +364,7 @@ PCIB_ACCESSOR(bus,		BUS,		uint32_t)
  * PCI interrupt validation.  Invalid interrupt values such as 0 or 128
  * on i386 or other platforms should be mapped out in the MD pcireadconf
  * code and not here, since the only MI invalid IRQ is 255.
- */
+ 
 #define	PCI_INVALID_IRQ		255
 #define	PCI_INTERRUPT_VALID(x)	((x) != PCI_INVALID_IRQ)
 
@@ -373,7 +373,7 @@ PCIB_ACCESSOR(bus,		BUS,		uint32_t)
  *
  * These should be used in preference to manually manipulating
  * configuration space.
- */
+ 
 static __inline int
 pci_enable_busmaster(device_t dev)
 {
@@ -412,7 +412,7 @@ pci_get_vpd_readonly(device_t dev, const char *kw, const char **vptr)
 
 /*
  * Check if the address range falls within the VGA defined address range(s)
- */
+ 
 static __inline int
 pci_is_vga_ioport_range(rman_res_t start, rman_res_t end)
 {
@@ -442,7 +442,7 @@ pci_is_vga_memory_range(rman_res_t start, rman_res_t end)
  *	must be prepared for the bus to be in D2 or higher.
  * D3	State in which the device is off and not running.  Device context is
  *	lost.  Power can be removed from the device.
- */
+ 
 #define	PCI_POWERSTATE_D0	0
 #define	PCI_POWERSTATE_D1	1
 #define	PCI_POWERSTATE_D2	2
@@ -576,7 +576,7 @@ pci_get_id(device_t dev, enum pci_id_type type, uintptr_t *id)
  * This is the deprecated interface, there is no way to tell the difference
  * between a failure and a valid value that happens to be the same as the
  * failure value.
- */
+ 
 static __inline uint16_t
 pci_get_rid(device_t dev)
 {
@@ -600,7 +600,7 @@ device_t pci_find_dbsf(uint32_t, uint8_t, uint8_t, uint8_t);
 device_t pci_find_device(uint16_t, uint16_t);
 device_t pci_find_class(uint8_t class, uint8_t subclass);
 
-/* Can be used by drivers to manage the MSI-X table. */
+/* Can be used by drivers to manage the MSI-X table. 
 int	pci_pending_msix(device_t dev, u_int index);
 
 int	pci_msi_device_blacklisted(device_t dev);
@@ -629,7 +629,7 @@ bool	pcie_wait_for_pending_transactions(device_t dev, u_int max_delay);
 #define	PCI_DMA_BOUNDARY	0
 #endif
 #endif
-
+*/
 #endif	/* _SYS_BUS_H_ */
 
 /*

@@ -172,9 +172,9 @@ int	 memcmp(const void *b1, const void *b2, size_t len);
 void	*memmem(const void *l, size_t l_len, const void *s, size_t s_len);
 void	 qsort(void *base, size_t nmemb, size_t size,
 	    int (*compar)(const void *, const void *));
+#ifndef _KERNEL_UT
 void	 qsort_r(void *base, size_t nmemb, size_t size, void *thunk,
 	    int (*compar)(void *, const void *, const void *));
-#ifndef _KERNEL_UT
 u_long	 random(void);
 #endif
 int	 scanc(u_int, const u_char *, const u_char *, int);

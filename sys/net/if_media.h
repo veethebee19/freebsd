@@ -52,7 +52,7 @@
  * to implement this interface.
  */
 
-#ifdef _KERNEL
+#if defined(_KERNEL) || defined(_KERNEL_UT)
 
 #include <sys/queue.h>
 

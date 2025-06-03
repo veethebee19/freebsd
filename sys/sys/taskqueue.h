@@ -31,7 +31,7 @@
 #ifndef _SYS_TASKQUEUE_H_
 #define _SYS_TASKQUEUE_H_
 
-#ifndef _KERNEL
+#if !defined(_KERNEL) && !defined(_KERNEL_UT)
 #error "no user-serviceable parts inside"
 #endif
 

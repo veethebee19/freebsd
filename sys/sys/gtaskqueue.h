@@ -33,7 +33,7 @@
 #define _SYS_GTASKQUEUE_H_
 #include <sys/taskqueue.h>
 
-#ifndef _KERNEL
+#if !defined(_KERNEL) && !defined(_KERNEL_UT)
 #error "no user-serviceable parts inside"
 #endif
 
